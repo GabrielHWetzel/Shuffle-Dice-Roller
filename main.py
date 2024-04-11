@@ -10,10 +10,6 @@ def create_dice(size):
 
 
 def roll_dice(dice):
-    """Two-step randomize
-    First shuffles list then picks a random index
-    Should be enough to create an almost non-pseudo random result"""
-    random.shuffle(dice)
     size = len(dice)
     return dice[random.randint(0, size-1)]
 
@@ -29,27 +25,29 @@ def generate_dict(size):
         return dictionary
 
 
-size_of_dice = st.number_input("Dice size", min_value=1)
+size_of_dice = st.number_input("Dice size", min_value=2)
 amount_of_dice = st.number_input("Dice amount", min_value=1)
 dice_rolled = 0
 
 roll = st.button("Roll")
 
 if roll:
+    dice_to_roll = create_dice(size_of_dice)
     all_results = generate_dict(size_of_dice)
     while dice_rolled < amount_of_dice:
+
         # Rolls dice
-        dice_to_roll = create_dice(size_of_dice)
         dice_result = roll_dice(dice_to_roll)
 
-        # Stores result to dictionary
+        # Stores results to dictionary
         all_results["results"][dice_result-1] += 1
 
         dice_rolled += 1
 
     figure = px.bar(all_results,
                     x=all_results["values"], y=all_results["results"],
-                    labels={"x": "Values", "y": "Results"})
+                    labels={"x": "Value", "y": "Results"},
+                    range_y=(0,amount_of_dice))
     st.plotly_chart(figure)
 
 
