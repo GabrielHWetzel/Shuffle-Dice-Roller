@@ -3,15 +3,15 @@ import streamlit as st
 import plotly.express as px
 
 
-def create_dice(size):
-    """Generates dice as a list"""
-    dice = [i for i in range(1, size+1)]
-    return dice
+class Dice:
 
+    def __init__(self, size):
+        """Generates dice as a list"""
+        self.dice = [i for i in range(1, size+1)]
 
-def roll_dice(dice):
-    size = len(dice)
-    return dice[random.randint(0, size-1)]
+    def roll_dice(self):
+        size = len(self.dice)
+        return self.dice[random.randint(0, size-1)]
 
 
 def generate_dict(size):
@@ -32,12 +32,12 @@ dice_rolled = 0
 roll = st.button("Roll")
 
 if roll:
-    dice_to_roll = create_dice(size_of_dice)
+    dice = Dice(size_of_dice)
     all_results = generate_dict(size_of_dice)
     while dice_rolled < amount_of_dice:
 
         # Rolls dice
-        dice_result = roll_dice(dice_to_roll)
+        dice_result = dice.roll_dice()
 
         # Stores results to dictionary
         all_results["results"][dice_result-1] += 1
