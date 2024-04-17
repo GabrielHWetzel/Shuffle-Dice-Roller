@@ -37,14 +37,16 @@ class MultiDice(Dice):
 
 
 def interpreter(text: str):
-    # Splits dice apart
-    text_list = text.split("+")
-    text_list = [text.strip() for text in text_list]
-
+    # Splits Dice and operations
+    pattern = re.compile("[+-/*]")
+    dice_list = re.split(pattern, text)
+    operation_list = re.findall(pattern, text)
+    print(dice_list)
+    print(operation_list)
     all_results = []
 
-    # Filters out the dice
-    for i in text_list:
+    # Filters out the dice and rolls
+    for i in dice_list:
         # Dice is a tuple: (Amount to roll, Dice size)
         pattern = re.compile("([0-9]+)[dD]([0-9]+)")
         dice_set = re.findall(pattern, i)[0]
@@ -62,4 +64,4 @@ def interpreter(text: str):
 
 if __name__ == "__main__":
     # Testing area
-    interpreter("20d10 + asdge1D10teststsad")
+    interpreter("20d10 + asdge1D10teststsad * 50d2 - 3d10 / 5d5")
