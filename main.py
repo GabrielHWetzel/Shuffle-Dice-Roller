@@ -10,27 +10,31 @@ roll = st.button("Roll")
 
 if roll:
     roller.interpreter(roll_input)
-    dice = roller.Dice(size_of_dice)
-    # Multi Roll Option
-    if amount_of_dice > 1:
-        # Class because in the future there can be multi rolls of different sizes happening
-        multiroll = roller.Multiroll(dice, amount_of_dice)
-        result = multiroll.roll()
-        st.info(result)
-        # Chart
-        all_results = multiroll.generate_dict()
-        figure = px.bar(all_results,
-                        x=all_results["values"], y=all_results["results"],
-                        labels={"x": "Value", "y": "Results"},
-                        range_y=(0, amount_of_dice))
-        st.plotly_chart(figure)
 
-    # Single Dice Option
-    else:
-        result = dice.roll()
-        result = str(result)
-        st.info(result)
+    # Class because in the future there can be multi rolls of different sizes happening
+    dice = roller.MultiDice(size_of_dice, amount_of_dice)
+    result = dice.list_rolls()
+    st.info(result)
+
 
 if __name__ == "__main__":
     # Testing area
-    pass
+    """
+    all_results = multiroll.generate_dict()
+    
+    Alternative Option on generating dictionary, not sure how to make it work thou:
+        dictionary = {}
+        for i in range(1, self.dice.size + 1):
+            print(i)
+            dictionary[i] = 0
+        print(dictionary)
+        for i in self.all_results:
+            dictionary[i] += 1
+        print(dictionary)
+        
+    # Chart
+    figure = px.bar(all_results,
+                    x=all_results["values"], y=all_results["results"],
+                    labels={"x": "Value", "y": "Results"},
+                    range_y=(0, amount_of_dice))
+    st.plotly_chart(figure)"""
