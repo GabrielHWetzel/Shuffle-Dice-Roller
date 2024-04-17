@@ -62,6 +62,8 @@ def roll(text: str):
         # Changes to int. Text is not valuable as of now
         dice_set = (int(dice_set[0]), int(dice_set[1]))
         print(dice_set)
+
+        # Instantiates class and rolls
         multi = MultiDice(dice_set[0], dice_set[1])
         results = multi.list_rolls()
         print("Results are:", results)
